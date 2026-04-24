@@ -22,9 +22,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
 
-        /* --- 导航栏 --- */
+        /* --- 导航栏自适应 --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -34,23 +35,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
+            padding: 10px 15px;
             box-sizing: border-box;
             z-index: 9999;
         }
 
         .logo { font-weight: bold; color: var(--accent-gold); font-size: 1.1rem; }
-        .nav-links a { text-decoration: none; color: var(--text-grey); margin: 0 10px; font-size: 0.85rem; }
-        
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-grey);
+            margin: 0 8px;
+            font-size: 0.85rem;
+        }
+
         .lang-btn {
+            background-color: white;
             border: 2px solid var(--accent-gold);
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
             color: var(--accent-gold);
-            background: white;
+            min-width: 60px;
+            text-align: center;
         }
 
         /* --- 公告流排版 --- */
@@ -69,15 +78,9 @@
             border: 1px solid #f0f0f0;
         }
 
-        .post-image-container {
-            width: 100%;
-            background: #f9f9f9;
-        }
-
         .post-image-container img {
             width: 100%;
             display: block;
-            /* 这种边框会让照片看起来像贴在卡片上的海报 */
             border-bottom: 1px solid #eee; 
         }
 
@@ -86,35 +89,35 @@
         }
 
         .post-date {
-    font-size: 0.75rem;
-    color: #ccc;
-    margin-bottom: 10px;
-    text-align: left; /* 改成左对齐 */
-    letter-spacing: 1px;
-    padding-left: 5px; /* 给左边留一点点呼吸空间 */
-}
+            font-size: 0.75rem;
+            color: #ccc;
+            margin-bottom: 10px;
+            text-align: left; 
+            letter-spacing: 1px;
+            padding-left: 5px;
+        }
 
         .post-text {
-    font-size: 1rem;
-    line-height: 1.6; /* 从 2.0 调回 1.6，让文字更紧凑 */
-    text-align: center;
-}
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
 
-/* 重点：消除段落之间巨大的空行 */
-.post-text p {
-    margin: 5px 0; /* 让上下间距从默认的十几像素变成只有 5 像素 */
-}
+        .post-text p {
+            margin: 5px 0; 
+        }
 
-        /* 强制中英文显隐逻辑 */
+        /* 显隐逻辑 */
         .en-content { display: none !important; }
         .cn-content { display: block !important; }
+        /* 导航栏链接需要 inline-block 否则会换行 */
+        a.en-content, a.cn-content { display: none !important; }
 
-        /* 手机端适配 */
         @media screen and (max-width: 600px) {
-            .navbar { padding: 10px 15px; }
+            .navbar { padding: 10px; }
             .logo { font-size: 0.9rem; }
+            .nav-links a { margin: 0 4px; font-size: 0.7rem; }
             .post-content { padding: 20px 15px; }
-            .post-text { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -123,15 +126,25 @@
     <nav class="navbar">
         <div class="logo">Kyoong MY</div>
         <div class="nav-links">
-            <a href="index.html" class="cn-content">主页</a><a href="index.html" class="en-content">Home</a>
-            <a href="announcement.html" style="font-weight: bold; color: var(--accent-gold);">Announcements</a>
-            <a href="countdown.html" class="cn-content">倒计时</a><a href="countdown.html" class="en-content">Countdown</a>
+            <a href="index.html" class="cn-content">主页</a>
+            <a href="index.html" class="en-content">Home</a>
+            
+            <a href="countdown.html" class="cn-content">倒计时</a>
+            <a href="countdown.html" class="en-content">Countdown</a>
+
+            <a href="announcement.html" class="cn-content" style="font-weight: bold; color: var(--accent-gold);">公告</a>
+            <a href="announcement.html" class="en-content" style="font-weight: bold; color: var(--accent-gold);">News</a>
+
+            <a href="calendar.html" class="cn-content">月历</a>
+            <a href="calendar.html" class="en-content">Calendar</a>
+
+            <a href="contact.html" class="cn-content">联络</a>
+            <a href="contact.html" class="en-content">Contact</a>
         </div>
         <div class="lang-btn" onclick="switchLanguage()">CN/EN</div>
     </nav>
 
     <div class="feed-container">
-        
         <div class="post-card">
             <div class="post-image-container">
                 <img src="tnc cn-02-01.png" class="cn-content">
@@ -141,12 +154,12 @@
             <div class="post-content">
                 <div class="post-date">2026.04.22</div>
                 <div class="post-text">
-                    
                     <div class="cn-content">
                         <p>✨光启处，是伯贤的TMI时间💫</p>
                         <p>为了让大家都能有更舒服的体验</p>
                         <p>来之前记得看看这些小规则哦～🤎</p>
-                        <div style="height: 15px;"></div> <p>📅 2026年5月2日</p>
+                        <div style="height: 15px;"></div>
+                        <p>📅 2026年5月2日</p>
                         <p>⏰ 12PM - 6PM</p>
                         <p>📍 MM Cafe, The Labs</p>
                     </div>
@@ -160,31 +173,29 @@
                         <p>⏰ 12PM - 6PM</p>
                         <p>📍 MM Cafe, The Labs</p>
                     </div>
-
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
     <script>
         let isEnglish = false;
         function switchLanguage() {
             isEnglish = !isEnglish;
-            
-            // 找到所有需要切换的元素
             const cnItems = document.querySelectorAll('.cn-content');
             const enItems = document.querySelectorAll('.en-content');
             
             if (isEnglish) {
                 cnItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
                 enItems.forEach(el => {
-                    // 如果是 div 或 p，用 block ；如果是 a 或 img，用 inline-block 或 block
-                    el.style.setProperty('display', (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block', 'important');
+                    let displayType = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block';
+                    el.style.setProperty('display', displayType, 'important');
                 });
             } else {
                 enItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
                 cnItems.forEach(el => {
-                    el.style.setProperty('display', (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block', 'important');
+                    let displayType = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block';
+                    el.style.setProperty('display', displayType, 'important');
                 });
             }
         }
