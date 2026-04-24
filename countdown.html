@@ -32,23 +32,44 @@
             cs: { title: "伯贤生咖正日 ✦", time: new Date('May 2, 2026 12:00:00').getTime() },
             bday: { title: "邊伯賢生日 ✨", time: new Date('May 6, 2026 00:00:00').getTime() }
         };
+
         let currentEvent = 'cs';
+        let countdownInterval;
+
         function setEvent(k) {
             currentEvent = k;
             document.getElementById('btn-cs').classList.remove('active');
             document.getElementById('btn-bday').classList.remove('active');
             document.getElementById('btn-'+k).classList.add('active');
-            update();
+            update(); 
         }
+
         function update() {
-            const diff = events[currentEvent].time - new Date().getTime();
+            const now = new Date().getTime();
+            const diff = events[currentEvent].time - now;
             document.getElementById('event-title').innerHTML = events[currentEvent].title;
+
             if (diff > 0) {
-                const d = Math.floor(diff/(1000*60*60*24)), h = Math.floor((diff%(1000*60*60*24))/(1000*60*60)), m = Math.floor((diff%(1000*60*60))/(1000*60));
-                document.getElementById('timer-digits').innerHTML = `${d}天 ${h}小时 ${m}分`;
-            } else { document.getElementById('timer-digits').innerHTML = "HAPPY DAY! 🎉"; }
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000); // 算出秒数
+                
+                // 让秒数始终保持两位数，比如 09, 08... 更有仪式感
+                const displayS = s < 10 ? '0' + s : s;
+                const displayM = m < 10 ? '0' + m : m;
+
+                document.getElementById('timer-digits').innerHTML = 
+                    `${d}天 ${h}时 ${displayM}分 <span style="color:#D21F3C;">${displayS}秒</span>`;
+            } else {
+                document.getElementById('timer-digits').innerHTML = "HAPPY DAY! 🎉";
+            }
         }
-        setInterval(update, 1000); update();
+
+        // 核心改动：确保每 1000 毫秒（也就是 1 秒）刷新一次界面
+        setInterval(update, 1000); 
+        update();
+
     </script>
 </body>
 </html
