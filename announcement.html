@@ -86,18 +86,24 @@
         }
 
         .post-date {
-            font-size: 0.75rem;
-            color: #ccc;
-            margin-bottom: 15px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
+    font-size: 0.75rem;
+    color: #ccc;
+    margin-bottom: 10px;
+    text-align: left; /* 改成左对齐 */
+    letter-spacing: 1px;
+    padding-left: 5px; /* 给左边留一点点呼吸空间 */
+}
 
         .post-text {
-            font-size: 1rem;
-            line-height: 2.0; /* 增加行高，让文字不拥挤 */
-            text-align: center;
-        }
+    font-size: 1rem;
+    line-height: 1.6; /* 从 2.0 调回 1.6，让文字更紧凑 */
+    text-align: center;
+}
+
+/* 重点：消除段落之间巨大的空行 */
+.post-text p {
+    margin: 5px 0; /* 让上下间距从默认的十几像素变成只有 5 像素 */
+}
 
         /* 强制中英文显隐逻辑 */
         .en-content { display: none !important; }
