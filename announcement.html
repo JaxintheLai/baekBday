@@ -93,9 +93,10 @@
         }
 
         .post-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+    text-align: center; /* 统一居中 */
+    line-height: 2.0;   /* 数字越大，行间距越宽，看起来更高级 */
+    padding: 10px 20px; /* 给文字左右留点空间，不要贴边 */
+}
 
         /* 响应式调整 */
         @media screen and (max-width: 600px) {
@@ -127,21 +128,25 @@
 </div>
             <div class="post-content">
                 <div class="post-date">2026.04.22</div>
-                <div class="post-text">
-                    <p class="cn-content">✨ ✨光启处，是伯贤的TMI时间💫
-为了让大家都能有更舒服的体验
-来之前记得看看这些小规则哦～🤎
-‎📅2026年5月2日
-⏰12PM - 6PM
-📍MM Cafe, The Labs
-</p>
-                    <p class="en-content">✨ Where Light Begins, BAEKHYUN‘s TMI Time💫
-To make sure everyone has a comfy and enjoyable experience,
-please take a moment to go through these little guidelines before coming~🤎
-📅2 May 2026
-⏰12PM - 6PM
-📍MM Cafe, The Labs</p>
-                </div>
+                <div class="post-text" style="text-align: center;">
+    <div class="cn-content">
+        <p>✨光启处，是伯贤的TMI时间💫</p>
+        <p>为了让大家都能有更舒服的体验</p>
+        <p>来之前记得看看这些小规则哦～🤎</p>
+        <p></p> 
+        <p>📅 2026年5月2日</p>
+        <p>⏰ 12PM - 6PM</p>
+        <p>📍 MM Cafe, The Labs</p>
+    </div>
+                    
+         <p class="en-content"> <p>✨ Where Light Begins, BAEKHYUN‘s TMI Time💫</p>
+        <p>To make sure everyone has a comfy and enjoyable experience,</p>
+        <p>please take a moment to go through these little guidelines before coming~🤎</p>
+        <p></p> 
+        <p>📅2 May 2026</p>
+        <p>⏰12PM - 6PM</p>
+        <p>📍MM Cafe, The Labs</p>
+    </div>
             </div>
         </div>
 
@@ -149,7 +154,7 @@ please take a moment to go through these little guidelines before coming~🤎
             <div class="post-image" style="background: var(--accent-gold);">ANOTHER POST</div>
             <div class="post-content">
                 <div class="post-date">2026.04.20</div>
-                <div class="post-text">
+                <div class="">
                     <p class="cn-content">📢 注意事项：请大家在参与活动时遵守现场秩序哦~</p>
                     <p class="en-content">📢 Reminders: Please follow the rules and maintain order during the event~</p>
                 </div>
