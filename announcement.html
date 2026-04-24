@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyoong MY | Announcements</title>
+    <style>
+        :root {
+            --bg-cream: #FFFDF5;
+            --soft-pink: #FFECF2;
+            --dreamy-blue: #EBF8FF;
+            --accent-gold: #E6CFA0;
+            --text-grey: #555;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-grey);
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- 导航栏 (保持和主页一致) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-bottom: 2px dashed var(--accent-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1.1rem; }
+        .nav-links a { text-decoration: none; color: var(--text-grey); margin: 0 10px; font-size: 0.85rem; }
+        
+        .lang-btn {
+            border: 2px solid var(--accent-gold);
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        /* --- 公告流 (Feed) 排版 --- */
+        .feed-container {
+            width: 90%;
+            max-width: 500px; /* 模拟手机端窄屏感，非常适合滑行 */
+            padding-bottom: 50px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+
+        /* 图片区域：以后你换成自己的图 */
+        .post-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, var(--soft-pink), var(--dreamy-blue));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-date {
+            font-size: 0.7rem;
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+
+        .post-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* 响应式调整 */
+        @media screen and (max-width: 600px) {
+            .navbar { padding: 10px 15px; }
+            .post-image { height: 250px; }
+        }
+
+        .en-content { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Kyoong MY</div>
+        <div class="nav-links">
+            <a href="index.html" class="cn-content">主页</a><a href="index.html" class="en-content">Home</a>
+            <a href="announcement.html" style="font-weight: bold; color: var(--accent-gold);">Announcements</a>
+            <a href="countdown.html" class="cn-content">倒计时</a><a href="countdown.html" class="en-content">Countdown</a>
+        </div>
+        <div class="lang-btn" onclick="switchLanguage()">CN/EN</div>
+    </nav>
+
+    <div class="feed-container">
+        
+        <div class="post-card">
+            <div class="post-image">POSTER / IMAGE HERE</div>
+            <div class="post-content">
+                <div class="post-date">2026.04.24</div>
+                <div class="post-text">
+                    <p class="cn-content">✨ 生咖活动筹备更新：A1海报设计已完成！感谢大家的期待，活动当天见！</p>
+                    <p class="en-content">✨ Cafe project update: A1 Poster design is ready! Thank you for the support, see you all on the event day!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-image" style="background: var(--accent-gold);">ANOTHER POST</div>
+            <div class="post-content">
+                <div class="post-date">2026.04.20</div>
+                <div class="post-text">
+                    <p class="cn-content">📢 注意事项：请大家在参与活动时遵守现场秩序哦~</p>
+                    <p class="en-content">📢 Reminders: Please follow the rules and maintain order during the event~</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let isEnglish = false;
+        function switchLanguage() {
+            isEnglish = !isEnglish;
+            const cnItems = document.querySelectorAll('.cn-content');
+            const enItems = document.querySelectorAll('.en-content');
+            cnItems.forEach(el => el.style.display = isEnglish ? 'none' : 'block');
+            enItems.forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+        }
+    </script>
+</body>
+</html>
