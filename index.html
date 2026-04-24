@@ -5,6 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kyoong MY | Official Home</title>
     <style>
+        :root {
+            --bg-cream: #FFFDF5;
+            --soft-pink: #FFECF2;
+            --dreamy-blue: #EBF8FF;
+            --accent-gold: #E6CFA0;
+            --text-grey: #555;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-grey);
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding-top: 80px;
+            /* 解决手机端溢出抖动 */
+            overflow-x: hidden;
+        }
+
+        /* --- 导航栏自适应 --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-bottom: 2px dashed var(--accent-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px; /* 缩小边距适应手机 */
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1.1rem; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-grey);
+            margin: 0 8px;
+            font-size: 0.85rem;
+        }
+
+        .lang-btn {
+            background-color: white;
+            border: 2px solid var(--accent-gold);
+            padding: 4px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            /* 扩大点击区域，手机更好点 */
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* --- 内容区自适应 --- */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--soft-pink), var(--dreamy-blue));
+            padding: 60px 15px; /* 减小手机上的内边距 */
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-size: 1.8rem; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); margin: 0; }
+        
+        /* --- 📱 手机端专属优化 (Screen < 600px) --- */
+        @media screen and (max-width: 600px) {
+            h1 { font-size: 1.4rem; } /* 手机标题小一点 */
+            
+            .navbar { padding: 10px; }
+            
+            .logo { font-size: 0.9rem; }
+            
+            .nav-links a { margin: 0 5px; font-size: 0.75rem; }
+            
+            .hero-banner { padding: 40px 10px; }
+
+            .intro-text p { font-size: 0.9rem; padding: 0 10px; }
+        }
+
+        .disclaimer { font-size: 0.7rem; font-style: italic; opacity: 0.6; margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px; }
+
+        .en-content { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Kyoong MY</div>
+        <div class="nav-links">
+            <a href="index.html" class="cn-content">主页</a>
+            <a href="index.html" class="en-content">Home</a>
+            <a href="countdown.html" class="cn-content">倒计时</a>
+            <a href="countdown.html" class="en-content">Countdown</a>
+        </div>
+        <div class="lang-btn" id="langToggle" onclick="switchLanguage()">CN/EN</div>
+    </nav>
+
+    <div class="content-section">
+        <div class="hero-banner">
+            <h1 class="cn-content">欢迎来到 Kyoong MY</h1>
+            <h1 class="en-content">Welcome to Kyoong MY</h1>
+        </div>
+
+        <div class="intro-text">
+            <div class="cn-content">
+                <p>我们是来自马来西亚的边伯贤粉丝团。</p>
+                <p class="disclaimer">注：本网站由粉丝自发组织，非官方粉丝团。</p>
+            </div>
+            
+            <div class="en-content">
+                <p>We are a fan base for Baekhyun in Malaysia.</p>
+                <p class="disclaimer">Note: This is a fan-organized site, not an official fan club.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isEnglish = false;
+        function switchLanguage() {
+            isEnglish = !isEnglish;
+            const cnItems = document.querySelectorAll('.cn-content');
+            const enItems = document.querySelectorAll('.en-content');
+            
+            if (isEnglish) {
+                cnItems.forEach(el => el.style.display = 'none');
+                enItems.forEach(el => {
+                    el.style.display = el.tagName === 'DIV' ? 'block' : 'inline-block';
+                });
+            } else {
+                enItems.forEach(el => el.style.display = 'none');
+                cnItems.forEach(el => {
+                    el.style.display = el.tagName === 'DIV' ? 'block' : 'inline-block';
+                });
+            }
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyoong MY | Official Home</title>
+    <style>
         /* 核心视觉：回归梦幻剪贴簿风格 */
         :root {
             --bg-cream: #FFFDF5;
