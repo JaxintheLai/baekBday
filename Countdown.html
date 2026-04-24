@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyoong MY | Countdown</title>
+    <style>
+        body { background-color: #FFFDF5; color: #666; font-family: 'Georgia', serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .container { text-align: center; width: 90%; max-width: 600px; }
+        .selection-area { margin-bottom: 40px; display: flex; gap: 15px; justify-content: center; }
+        .select-btn { background: white; border: 1px solid #EEE; padding: 15px 25px; border-radius: 50px; cursor: pointer; color: #888; }
+        .select-btn.active { background: #FFECF2; border-color: #E6CFA0; color: #D21F3C; font-weight: bold; }
+        .countdown-display { background: white; border: 2px solid #FFECF2; padding: 30px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .timer-digits { font-size: 2rem; color: #333; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #E6CFA0;">COUNTDOWN CENTER</h1>
+        <div class="selection-area">
+            <button class="select-btn active" id="btn-cs" onclick="setEvent('cs')">生咖正日 (May 2)</button>
+            <button class="select-btn" id="btn-bday" onclick="setEvent('bday')">伯贤生日 (May 6)</button>
+        </div>
+        <div class="countdown-display">
+            <div id="event-title" style="color: #D21F3C; font-size: 1.2rem;"></div>
+            <div class="timer-digits" id="timer-digits">正在计算...</div>
+        </div>
+        <a href="index.html" style="margin-top:30px; display:block; color:#888; text-decoration:none;">← Back</a>
+    </div>
+    <script>
+        const events = {
+            cs: { title: "伯贤生咖正日 ✦", time: new Date('May 2, 2026 12:00:00').getTime() },
+            bday: { title: "邊伯賢生日 ✨", time: new Date('May 6, 2026 00:00:00').getTime() }
+        };
+        let currentEvent = 'cs';
+        function setEvent(k) {
+            currentEvent = k;
+            document.getElementById('btn-cs').classList.remove('active');
+            document.getElementById('btn-bday').classList.remove('active');
+            document.getElementById('btn-'+k).classList.add('active');
+            update();
+        }
+        function update() {
+            const diff = events[currentEvent].time - new Date().getTime();
+            document.getElementById('event-title').innerHTML = events[currentEvent].title;
+            if (diff > 0) {
+                const d = Math.floor(diff/(1000*60*60*24)), h = Math.floor((diff%(1000*60*60*24))/(1000*60*60)), m = Math.floor((diff%(1000*60*60))/(1000*60));
+                document.getElementById('timer-digits').innerHTML = `${d}天 ${h}小时 ${m}分`;
+            } else { document.getElementById('timer-digits').innerHTML = "HAPPY DAY! 🎉"; }
+        }
+        setInterval(update, 1000); update();
+    </script>
+</body>
+</html
