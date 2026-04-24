@@ -24,7 +24,7 @@
             align-items: center;
         }
 
-        /* --- 导航栏 (保持和主页一致) --- */
+        /* --- 导航栏 --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -50,61 +50,66 @@
             font-size: 0.75rem;
             font-weight: bold;
             color: var(--accent-gold);
+            background: white;
         }
 
-        /* --- 公告流 (Feed) 排版 --- */
+        /* --- 公告流排版 --- */
         .feed-container {
-            width: 90%;
-            max-width: 500px; /* 模拟手机端窄屏感，非常适合滑行 */
+            width: 95%;
+            max-width: 550px;
             padding-bottom: 50px;
         }
 
         .post-card {
             background: white;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            border-radius: 25px;
+            margin-bottom: 40px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
         }
 
-        /* 图片区域：以后你换成自己的图 */
-        .post-image {
+        .post-image-container {
             width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, var(--soft-pink), var(--dreamy-blue));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
+            background: #f9f9f9;
+        }
+
+        .post-image-container img {
+            width: 100%;
+            display: block;
+            /* 这种边框会让照片看起来像贴在卡片上的海报 */
+            border-bottom: 1px solid #eee; 
         }
 
         .post-content {
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         .post-date {
-            font-size: 0.7rem;
-            color: #bbb;
-            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: #ccc;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 1px;
         }
 
         .post-text {
-    text-align: center; /* 统一居中 */
-    line-height: 2.0;   /* 数字越大，行间距越宽，看起来更高级 */
-    padding: 10px 20px; /* 给文字左右留点空间，不要贴边 */
-}
-
-        /* 响应式调整 */
-        @media screen and (max-width: 600px) {
-            .navbar { padding: 10px 15px; }
-            .post-image { height: 250px; }
+            font-size: 1rem;
+            line-height: 2.0; /* 增加行高，让文字不拥挤 */
+            text-align: center;
         }
 
-        .en-content { display: none; }
+        /* 强制中英文显隐逻辑 */
+        .en-content { display: none !important; }
+        .cn-content { display: block !important; }
+
+        /* 手机端适配 */
+        @media screen and (max-width: 600px) {
+            .navbar { padding: 10px 15px; }
+            .logo { font-size: 0.9rem; }
+            .post-content { padding: 20px 15px; }
+            .post-text { font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
@@ -123,55 +128,59 @@
         
         <div class="post-card">
             <div class="post-image-container">
-    <img src="tnc cn-02-01.png" class="cn-content" style="width: 100%; display: block; border-radius: 15px;">
-    <img src="tnc en-02-01.png" class="en-content" style="width: 100%; display: none; border-radius: 15px;">
-</div>
+                <img src="tnc cn-02-01.png" class="cn-content">
+                <img src="tnc en-02-01.png" class="en-content">
+            </div>
+
             <div class="post-content">
                 <div class="post-date">2026.04.22</div>
-                <div class="post-text" style="text-align: center;">
-    <div class="cn-content">
-        <p>✨光启处，是伯贤的TMI时间💫</p>
-        <p>为了让大家都能有更舒服的体验</p>
-        <p>来之前记得看看这些小规则哦～🤎</p>
-        <p></p> 
-        <p>📅 2026年5月2日</p>
-        <p>⏰ 12PM - 6PM</p>
-        <p>📍 MM Cafe, The Labs</p>
-    </div>
+                <div class="post-text">
                     
-      <div class="en-content"> 
-        <p>✨ Where Light Begins, BAEKHYUN‘s TMI Time💫</p>
-        <p>To make sure everyone has a comfy and enjoyable experience,</p>
-        <p>please take a moment to go through these little guidelines before coming~🤎</p>
-        <p></p> 
-        <p>📅2 May 2026</p>
-        <p>⏰12PM - 6PM</p>
-        <p>📍MM Cafe, The Labs</p>
-    </div>
-            </div>
-        </div>
+                    <div class="cn-content">
+                        <p>✨光启处，是伯贤的TMI时间💫</p>
+                        <p>为了让大家都能有更舒服的体验</p>
+                        <p>来之前记得看看这些小规则哦～🤎</p>
+                        <div style="height: 15px;"></div> <p>📅 2026年5月2日</p>
+                        <p>⏰ 12PM - 6PM</p>
+                        <p>📍 MM Cafe, The Labs</p>
+                    </div>
 
-        <div class="post-card">
-            <div class="post-image" style="background: var(--accent-gold);">ANOTHER POST</div>
-            <div class="post-content">
-                <div class="post-date">2026.04.20</div>
-                <div class="">
-                    <p class="cn-content">📢 注意事项：请大家在参与活动时遵守现场秩序哦~</p>
-                    <p class="en-content">📢 Reminders: Please follow the rules and maintain order during the event~</p>
+                    <div class="en-content"> 
+                        <p>✨ Where Light Begins, BAEKHYUN‘s TMI Time💫</p>
+                        <p>To make sure everyone has a comfy experience,</p>
+                        <p>please take a moment to go through these rules~🤎</p>
+                        <div style="height: 15px;"></div>
+                        <p>📅 2 May 2026</p>
+                        <p>⏰ 12PM - 6PM</p>
+                        <p>📍 MM Cafe, The Labs</p>
+                    </div>
+
                 </div>
             </div>
         </div>
-
-    </div>
+        </div>
 
     <script>
         let isEnglish = false;
         function switchLanguage() {
             isEnglish = !isEnglish;
+            
+            // 找到所有需要切换的元素
             const cnItems = document.querySelectorAll('.cn-content');
             const enItems = document.querySelectorAll('.en-content');
-            cnItems.forEach(el => el.style.display = isEnglish ? 'none' : 'block');
-            enItems.forEach(el => el.style.display = isEnglish ? 'block' : 'none');
+            
+            if (isEnglish) {
+                cnItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
+                enItems.forEach(el => {
+                    // 如果是 div 或 p，用 block ；如果是 a 或 img，用 inline-block 或 block
+                    el.style.setProperty('display', (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block', 'important');
+                });
+            } else {
+                enItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
+                cnItems.forEach(el => {
+                    el.style.setProperty('display', (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block', 'important');
+                });
+            }
         }
     </script>
 </body>
