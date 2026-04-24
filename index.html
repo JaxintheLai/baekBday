@@ -1,4 +1,139 @@
-<nav class="navbar">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyoong MY | Official Home</title>
+    <style>
+        /* 核心视觉：回归梦幻剪贴簿风格 */
+        :root {
+            --bg-cream: #FFFDF5;
+            --soft-pink: #FFECF2;
+            --dreamy-blue: #EBF8FF;
+            --accent-gold: #E6CFA0;
+            --text-grey: #555;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-grey);
+            font-family: 'Georgia', 'serif';
+            margin: 0;
+            padding-top: 70px; /* 为固定导航栏留出空间 */
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 2px dashed var(--accent-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1.2rem; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-grey);
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--soft-pink); }
+
+        .lang-switch {
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: 1px solid var(--accent-gold);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        /* 内容区域 */
+        .content-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--soft-pink), var(--dreamy-blue));
+            padding: 60px 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            border: 3px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-size: 2.5rem; margin: 0; letter-spacing: 2px; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        /* 隐藏未选中的语言 */
+        .lang-en { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Kyoong MY</div>
+        <div class="nav-links">
+            <a href="index.html" class="cn">主页</a><a href="index.html" class="en" style="display:none;">Home</a>
+            <a href="countdown.html" class="cn">倒计时</a><a href="countdown.html" class="en" style="display:none;">Countdown</a>
+            <a href="#" class="cn">公告</a><a href="#" class="en" style="display:none;">Announcements</a>
+        </div>
+        <div class="lang-switch" onclick="toggleLang()">CN / EN</div>
+    </nav>
+
+    <div class="content-section">
+        <div class="hero-banner">
+            <h1 class="lang-cn">欢迎来到 Kyoong MY</h1>
+            <h1 class="lang-en">Welcome to Kyoong MY</h1>
+        </div>
+
+        <div class="intro-text">
+            <p class="lang-cn">我们是来自马来西亚的边伯贤粉丝团。</p>
+            <p class="lang-en">We are a fan base for Baekhyun in Malaysia.</p>
+            
+            <p class="disclaimer lang-cn">注：本网站由粉丝自发组织，非官方粉丝团。</p>
+            <p class="disclaimer lang-en">Note: This is a fan-organized site, not an official fan club.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'cn';
+        function toggleLang() {
+            const cnElems = document.querySelectorAll('.lang-cn, .cn');
+            const enElems = document.querySelectorAll('.lang-en, .en');
+            
+            if (currentLang === 'cn') {
+                cnElems.forEach(el => el.style.display = 'none');
+                enElems.forEach(el => el.style.display = 'inline-block');
+                currentLang = 'en';
+            } else {
+                cnElems.forEach(el => el.style.display = 'inline-block');
+                enElems.forEach(el => el.style.display = 'none');
+                currentLang = 'cn';
+            }
+        }
+    </script>
+</body>
+</html><nav class="navbar">
     <div class="logo">Kyoong MY</div>
     <div class="nav-links">
         <a href="#home" class="lang-cn">主页</a>
