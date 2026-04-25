@@ -58,13 +58,19 @@
             text-align: center;
         }
 
-        /* --- 左侧返回按钮 --- */
+        /* --- 🛠️ 优化后的返回按钮定位 --- */
         .left-back-btn {
             position: fixed;
-            left: 20px;
             top: 150px;
             z-index: 1000;
+            
+            /* 魔法开始：先推到屏幕中间 */
+            left: 50%; 
+            
+            /* 然后向左拉内容区一半的距离(600px/2 = 300px)，再额外加点呼吸空间 */
+            margin-left: -380px; 
         }
+
         .left-back-btn a {
             text-decoration: none;
             color: var(--text-grey);
