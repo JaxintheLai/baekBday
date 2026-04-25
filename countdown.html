@@ -19,7 +19,7 @@
             color: var(--text-grey);
             font-family: 'Georgia', serif;
             margin: 0;
-            padding-top: 100px; /* 给导航栏留空间 */
+            padding-top: 100px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,7 +27,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 导航栏 (统一风格) --- */
+        /* --- 导航栏 --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -58,6 +58,33 @@
             text-align: center;
         }
 
+        /* --- 左侧返回按钮 (仅电脑端可见) --- */
+        .left-back-btn {
+            position: fixed;
+            left: 20px;
+            top: 150px;
+            z-index: 1000;
+        }
+        .left-back-btn a {
+            text-decoration: none;
+            color: var(--text-grey);
+            background: white;
+            border: 1px solid #EEE;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .left-back-btn a:hover {
+            background: var(--soft-pink);
+            color: var(--exo-red);
+            border-color: var(--accent-gold);
+            transform: translateX(-5px);
+        }
+
         /* --- 倒计时核心区域 --- */
         .container {
             text-align: center;
@@ -73,7 +100,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
-            flex-wrap: wrap; /* 手机端自动换行 */
+            flex-wrap: wrap;
         }
 
         .select-btn {
@@ -92,7 +119,6 @@
             border-color: var(--accent-gold);
             color: var(--exo-red);
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .countdown-display {
@@ -119,14 +145,16 @@
         /* 显隐逻辑 */
         .en-content { display: none !important; }
         .cn-content { display: block !important; }
-        a.en-content, a.cn-content { display: none !important; }
+        a.en-content, a.cn-content, div.en-content, div.cn-content { display: none !important; }
 
         /* 手机端适配 */
         @media screen and (max-width: 600px) {
-            h1 { font-size: 1.4rem; }
-            .timer-digits { font-size: 1.4rem; }
+            .navbar { padding: 10px; }
+            .logo { font-size: 0.9rem; }
             .nav-links a { margin: 0 4px; font-size: 0.7rem; }
-            .select-btn { padding: 10px 15px; font-size: 0.75rem; }
+            .left-back-btn { display: none !important; } /* 手机端隐藏左侧返回 */
+            .timer-digits { font-size: 1.4rem; }
+            h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -153,6 +181,13 @@
         <div class="lang-btn" onclick="switchLanguage()">CN/EN</div>
     </nav>
 
+    <div class="left-back-btn cn-content">
+        <a href="index.html">← 返回</a>
+    </div>
+    <div class="left-back-btn en-content">
+        <a href="index.html">← Back</a>
+    </div>
+
     <div class="container">
         <h1 class="cn-content">倒计时中心</h1>
         <h1 class="en-content">COUNTDOWN CENTER</h1>
@@ -160,11 +195,11 @@
         <div class="selection-area">
             <button class="select-btn active" id="btn-cs" onclick="setEvent('cs')">
                 <span class="cn-content">生咖正日 (May 2)</span>
-                <span class="en-content">Cup Sleeve Event (May 2)</span>
+                <span class="en-content">Cafe Event (May 2)</span>
             </button>
             <button class="select-btn" id="btn-bday" onclick="setEvent('bday')">
                 <span class="cn-content">伯贤生日 (May 6)</span>
-                <span class="en-content">Baekhyun Day (May 6)</span>
+                <span class="en-content">Baekhyun Bday (May 6)</span>
             </button>
         </div>
 
@@ -175,7 +210,6 @@
     </div>
 
     <script>
-        // 倒计时配置
         const events = {
             cs: { 
                 cn: "伯贤生咖正日 ✦", 
@@ -183,8 +217,8 @@
                 time: new Date('May 2, 2026 12:00:00').getTime() 
             },
             bday: { 
-                cn: "伯贤生日 ✦", 
-                en: "Baekhyun's Birthday ✦",
+                cn: "邊伯賢生日 ✨", 
+                en: "Baekhyun's Birthday ✨",
                 time: new Date('May 6, 2026 00:00:00').getTime() 
             }
         };
@@ -205,7 +239,6 @@
             const eventData = events[currentEvent];
             const diff = eventData.time - now;
             
-            // 根据语言显示标题
             document.getElementById('event-title').innerHTML = isEnglish ? eventData.en : eventData.cn;
 
             if (diff > 0) {
@@ -217,19 +250,18 @@
                 const displayS = s < 10 ? '0' + s : s;
                 const displayM = m < 10 ? '0' + m : m;
 
-                const dayStr = isEnglish ? "Days" : "天";
-                const hourStr = isEnglish ? "Hrs" : "时";
-                const minStr = isEnglish ? "Min" : "分";
-                const secStr = isEnglish ? "Sec" : "秒";
+                const dS = isEnglish ? "Days" : "天";
+                const hS = isEnglish ? "Hrs" : "时";
+                const mS = isEnglish ? "Min" : "分";
+                const sS = isEnglish ? "Sec" : "秒";
 
                 document.getElementById('timer-digits').innerHTML = 
-                    `${d}${dayStr} ${h}${hourStr} ${displayM}${minStr} <span style="color:var(--exo-red);">${displayS}${secStr}</span>`;
+                    `${d}${dS} ${h}${hS} ${displayM}${mS} <span style="color:var(--exo-red);">${displayS}${sS}</span>`;
             } else {
                 document.getElementById('timer-digits').innerHTML = "HAPPY BAEKHYUN DAY! 🎉";
             }
         }
 
-        // 语言切换逻辑
         function switchLanguage() {
             isEnglish = !isEnglish;
             const cnItems = document.querySelectorAll('.cn-content');
@@ -238,22 +270,21 @@
             if (isEnglish) {
                 cnItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
                 enItems.forEach(el => {
-                    let displayType = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block';
-                    el.style.setProperty('display', displayType, 'important');
+                    let type = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG' || el.tagName === 'H1') ? 'block' : 'inline-block';
+                    el.style.setProperty('display', type, 'important');
                 });
             } else {
                 enItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
                 cnItems.forEach(el => {
-                    let displayType = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG') ? 'block' : 'inline-block';
-                    el.style.setProperty('display', displayType, 'important');
+                    let type = (el.tagName === 'DIV' || el.tagName === 'P' || el.tagName === 'IMG' || el.tagName === 'H1') ? 'block' : 'inline-block';
+                    el.style.setProperty('display', type, 'important');
                 });
             }
-            update(); // 切换语言后立即刷新倒计时文字
+            update();
         }
 
         setInterval(update, 1000); 
         update();
-
     </script>
 </body>
 </html>
