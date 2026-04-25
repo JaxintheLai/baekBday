@@ -19,7 +19,7 @@
             color: var(--text-grey);
             font-family: 'Georgia', serif;
             margin: 0;
-            padding-top: 100px; 
+            padding-top: 110px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,7 +27,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 导航栏 --- */
+        /* --- 导航栏核心修复 --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -40,37 +40,50 @@
             padding: 10px 15px;
             box-sizing: border-box;
             z-index: 9999;
+            min-height: 70px;
         }
 
-        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1.1rem; }
-        .nav-links a { text-decoration: none; color: var(--text-grey); margin: 0 8px; font-size: 0.85rem; }
+        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1rem; flex-shrink: 0; }
+
+        /* 导航链接容器：默认布局 */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 0 10px;
+        }
+
+        /* 当切换为英文版时，通过 JS 动态添加这个 class 来实现两行 */
+        .nav-links.en-mode {
+            flex-direction: column; /* 变成上下两行 */
+            gap: 5px;
+        }
+
+        .nav-row { display: flex; justify-content: center; gap: 10px; }
+
+        .nav-links a { text-decoration: none; color: var(--text-grey); font-size: 0.8rem; white-space: nowrap; }
         
         .lang-btn {
             background-color: white;
             border: 2px solid var(--accent-gold);
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
             color: var(--accent-gold);
-            min-width: 60px;
-            text-align: center;
+            flex-shrink: 0;
         }
 
-        /* --- 🛠️ 优化后的返回按钮定位 --- */
+        /* --- 返回按钮定位 --- */
         .left-back-btn {
             position: fixed;
             top: 150px;
             z-index: 1000;
-            
-            /* 魔法开始：先推到屏幕中间 */
-            left: 30%; 
-            
-            /* 然后向左拉内容区一半的距离(600px/2 = 300px)，再额外加点呼吸空间 */
+            left: 30%;
             margin-left: -380px; 
         }
-
         .left-back-btn a {
             text-decoration: none;
             color: var(--text-grey);
@@ -80,104 +93,61 @@
             border-radius: 50px;
             font-size: 0.85rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.3s;
             display: flex;
             align-items: center;
         }
 
-        /* --- 倒计时区域 --- */
-        .container {
-            text-align: center;
-            width: 90%;
-            max-width: 600px;
-            padding: 20px;
-        }
-
+        /* --- 倒计时内容 --- */
+        .container { text-align: center; width: 90%; max-width: 600px; padding: 20px; }
         h1 { color: var(--accent-gold); font-size: 1.8rem; margin-bottom: 30px; letter-spacing: 2px; }
+        .selection-area { margin-bottom: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .select-btn { background: white; border: 1px solid #EEE; padding: 12px 20px; border-radius: 50px; cursor: pointer; color: #888; font-size: 0.85rem; }
+        .select-btn.active { background: var(--soft-pink); border-color: var(--accent-gold); color: var(--exo-red); font-weight: bold; }
+        .countdown-display { background: white; border: 2px solid var(--soft-pink); padding: 40px 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        #event-title { color: var(--exo-red); font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; }
+        .timer-digits { font-size: 1.8rem; color: #333; font-weight: bold; }
 
-        .selection-area {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .select-btn {
-            background: white;
-            border: 1px solid #EEE;
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            color: #888;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-
-        .select-btn.active {
-            background: var(--soft-pink);
-            border-color: var(--accent-gold);
-            color: var(--exo-red);
-            font-weight: bold;
-        }
-
-        .countdown-display {
-            background: white;
-            border: 2px solid var(--soft-pink);
-            padding: 40px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        #event-title {
-            color: var(--exo-red);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .timer-digits {
-            font-size: 1.8rem;
-            color: #333;
-            font-weight: bold;
-        }
-
-        /* --- 核心修复：初始显隐逻辑 --- */
-        /* 默认显示中文，隐藏英文 */
+        /* 初始显隐逻辑 */
         .en-content { display: none !important; }
         .cn-content { display: inline-block !important; }
-        /* 块级元素特殊处理 */
         h1.cn-content, div.cn-content { display: block !important; }
 
         @media screen and (max-width: 600px) {
-            .navbar { padding: 10px; }
-            .logo { font-size: 0.9rem; }
-            .nav-links a { margin: 0 4px; font-size: 0.7rem; }
+            body { padding-top: 120px; }
+            .navbar { padding: 10px 8px; }
             .left-back-btn { display: none !important; }
-            .timer-digits { font-size: 1.4rem; }
+            .timer-digits { font-size: 1.3rem; }
+            h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">Kyoong MY</div>
-        <div class="nav-links">
-            <a href="index.html" class="cn-content">主页</a>
-            <a href="index.html" class="en-content">Home</a>
-            
-            <a href="countdown.html" class="cn-content" style="font-weight: bold; color: var(--accent-gold);">倒计时</a>
-            <a href="countdown.html" class="en-content" style="font-weight: bold; color: var(--accent-gold);">Timer</a>
+        <div class="logo">Kyoong<br>MY</div>
+        
+        <div class="nav-links" id="navLinks">
+            <div class="cn-content">
+                <a href="index.html">主页</a>
+                <a href="countdown.html" style="font-weight:bold; color:var(--accent-gold);">倒计时</a>
+                <a href="announcement.html">公告</a>
+                <a href="calendar.html">月历</a>
+                <a href="contact.html">联络</a>
+            </div>
 
-            <a href="announcement.html" class="cn-content">公告</a>
-            <a href="announcement.html" class="en-content">News</a>
-
-            <a href="calendar.html" class="cn-content">月历</a>
-            <a href="calendar.html" class="en-content">Calendar</a>
-
-            <a href="contact.html" class="cn-content">联络</a>
-            <a href="contact.html" class="en-content">Contact</a>
+            <div class="en-content">
+                <div class="nav-row">
+                    <a href="index.html">Home</a>
+                    <a href="countdown.html" style="font-weight:bold; color:var(--accent-gold);">Timer</a>
+                    <a href="announcement.html">Announcement</a>
+                </div>
+                <div class="nav-row">
+                    <a href="calendar.html">Calendar</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
         </div>
+
         <div class="lang-btn" onclick="switchLanguage()">CN/EN</div>
     </nav>
 
@@ -195,11 +165,11 @@
         <div class="selection-area">
             <button class="select-btn active" id="btn-cs" onclick="setEvent('cs')">
                 <span class="cn-content">生咖正日 (May 2)</span>
-                <span class="en-content">Cafe Event (May 2)</span>
+                <span class="en-content">Cup Seelve Event (May 2)</span>
             </button>
             <button class="select-btn" id="btn-bday" onclick="setEvent('bday')">
                 <span class="cn-content">伯贤生日 (May 6)</span>
-                <span class="en-content">Baekhyun Bday (May 6)</span>
+                <span class="en-content">Baekhyun Day (May 6)</span>
             </button>
         </div>
 
@@ -211,8 +181,8 @@
 
     <script>
         const events = {
-            cs: { cn: "伯贤生咖正日 ✦", en: "Cafe Event Day ✦", time: new Date('May 2, 2026 12:00:00').getTime() },
-            bday: { cn: "邊伯賢生日 ✨", en: "Baekhyun's Birthday ✨", time: new Date('May 6, 2026 00:00:00').getTime() }
+            cs: { cn: "✦ 伯贤生咖 ✦", en: "✦ Cup Sleeve Event Day ✦", time: new Date('May 2, 2026 12:00:00').getTime() },
+            bday: { cn: "✦ 伯贤日 ✦", en: "✦ Baekhyun's Birthday ✦", time: new Date('May 6, 2026 00:00:00').getTime() }
         };
 
         let currentEvent = 'cs';
@@ -238,7 +208,7 @@
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                const dS = isEnglish ? "Days" : "天", hS = isEnglish ? "Hrs" : "时", mS = isEnglish ? "Min" : "分", sS = isEnglish ? "Sec" : "秒";
+                const dS = isEnglish ? "D" : "天", hS = isEnglish ? "H" : "时", mS = isEnglish ? "M" : "分", sS = isEnglish ? "S" : "秒";
                 document.getElementById('timer-digits').innerHTML = `${d}${dS} ${h}${hS} ${m < 10 ? '0'+m : m}${mS} <span style="color:var(--exo-red);">${s < 10 ? '0'+s : s}${sS}</span>`;
             } else {
                 document.getElementById('timer-digits').innerHTML = "HAPPY BAEKHYUN DAY! 🎉";
@@ -249,7 +219,15 @@
             isEnglish = !isEnglish;
             const cnItems = document.querySelectorAll('.cn-content');
             const enItems = document.querySelectorAll('.en-content');
+            const navLinks = document.getElementById('navLinks');
             
+            // 切换导航栏布局模式
+            if (isEnglish) {
+                navLinks.classList.add('en-mode');
+            } else {
+                navLinks.classList.remove('en-mode');
+            }
+
             cnItems.forEach(el => el.style.setProperty('display', isEnglish ? 'none' : ((el.tagName==='DIV'||el.tagName==='H1')?'block':'inline-block'), 'important'));
             enItems.forEach(el => el.style.setProperty('display', isEnglish ? ((el.tagName==='DIV'||el.tagName==='H1')?'block':'inline-block') : 'none', 'important'));
             update();
