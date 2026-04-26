@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kyoong MY | Calendar</title>
+    <title>Kyoong MY | Dynamic Calendar</title>
     <style>
         :root {
             --bg-cream: #FFFDF5;
@@ -11,7 +11,6 @@
             --accent-gold: #E6CFA0;
             --text-grey: #555;
             --exo-red: #D21F3C;
-            --calendar-white: #FFFFFF;
         }
 
         body {
@@ -28,122 +27,64 @@
 
         /* --- 导航栏 --- */
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 253, 245, 0.98);
-            border-bottom: 2px dashed var(--accent-gold);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            box-sizing: border-box;
-            z-index: 9999;
-            min-height: 70px;
+            position: fixed; top: 0; width: 100%; background: rgba(255, 253, 245, 0.98);
+            border-bottom: 2px dashed var(--accent-gold); display: flex;
+            justify-content: space-between; align-items: center; padding: 10px 15px;
+            box-sizing: border-box; z-index: 9999; min-height: 70px;
         }
-        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1rem; flex-shrink: 0; }
-        .nav-links { display: flex; justify-content: center; align-items: center; flex-grow: 1; padding: 0 10px; }
+        .logo { font-weight: bold; color: var(--accent-gold); font-size: 1rem; }
+        .nav-links { display: flex; justify-content: center; align-items: center; flex-grow: 1; }
         .nav-links.en-mode { flex-direction: column; gap: 5px; }
         .nav-row { display: flex; justify-content: center; gap: 10px; }
-        .nav-links a { text-decoration: none; color: var(--text-grey); font-size: 0.8rem; white-space: nowrap; }
-        .lang-btn { background-color: white; border: 2px solid var(--accent-gold); padding: 4px 8px; border-radius: 20px; cursor: pointer; font-size: 0.7rem; font-weight: bold; color: var(--accent-gold); }
+        .nav-links a { text-decoration: none; color: var(--text-grey); font-size: 0.8rem; }
+        .lang-btn { background: white; border: 2px solid var(--accent-gold); padding: 4px 8px; border-radius: 20px; cursor: pointer; font-size: 0.7rem; color: var(--accent-gold); }
 
-        /* --- 返回按钮 (电脑端) --- */
-        .left-back-btn {
-            position: fixed;
-            top: 150px;
-            z-index: 1000;
-            left: 50%;
-            margin-left: -400px;
-        }
-        .left-back-btn a {
-            text-decoration: none;
-            color: var(--text-grey);
-            background: white;
-            border: 1px solid #EEE;
-            padding: 10px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
+        /* --- 返回按钮 --- */
+        .left-back-btn { position: fixed; top: 150px; z-index: 1000; left: 50%; margin-left: -400px; }
+        .left-back-btn a { text-decoration: none; color: var(--text-grey); background: white; border: 1px solid #EEE; padding: 10px 18px; border-radius: 50px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
         /* --- 月历容器 --- */
-        .container { width: 90%; max-width: 500px; text-align: center; }
-        h1 { color: var(--accent-gold); font-size: 1.6rem; margin-bottom: 20px; letter-spacing: 2px; }
-
+        .container { width: 95%; max-width: 450px; text-align: center; }
+        
         .calendar-card {
-            background: var(--calendar-white);
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 2px solid var(--soft-pink);
+            background: white; border-radius: 25px; padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid var(--soft-pink);
         }
 
-        .calendar-header {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--exo-red);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .calendar-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; color: var(--exo-red); font-weight: bold;
         }
 
-        /* 日历网格 */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+        .nav-arrow {
+            cursor: pointer; padding: 5px 15px; border-radius: 50%;
+            background: var(--soft-pink); user-select: none; transition: 0.3s;
         }
+        .nav-arrow:hover { background: var(--accent-gold); color: white; }
 
-        .weekday { font-weight: bold; font-size: 0.75rem; color: var(--accent-gold); padding-bottom: 10px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .weekday { font-size: 0.7rem; color: var(--accent-gold); font-weight: bold; padding-bottom: 10px; }
         .day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            border-radius: 10px;
-            position: relative;
-            cursor: default;
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; border-radius: 50%; transition: 0.3s; position: relative;
         }
 
-        /* 特殊日期样式 */
-        .special-day {
-            background-color: var(--soft-pink);
-            color: var(--exo-red);
-            font-weight: bold;
-            border: 1px solid var(--accent-gold);
+        /* 纪念日样式 */
+        .special-day { background: var(--soft-pink); color: var(--exo-red); font-weight: bold; }
+        .special-day::after { content: '•'; position: absolute; bottom: 2px; font-size: 1.2rem; }
+
+        .today { border: 1px solid var(--exo-red); }
+
+        .event-info {
+            margin-top: 20px; padding: 15px; font-size: 0.85rem;
+            background: var(--bg-cream); border-radius: 15px; min-height: 50px;
+            border: 1px dashed var(--accent-gold);
         }
 
-        .special-day::after {
-            content: '✦';
-            position: absolute;
-            bottom: 2px;
-            font-size: 0.6rem;
-        }
-
-        /* 备注区域 */
-        .legend {
-            margin-top: 25px;
-            text-align: left;
-            font-size: 0.8rem;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 15px;
-        }
-        .legend-item { display: flex; align-items: center; margin-bottom: 8px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; background: var(--soft-pink); border: 1px solid var(--accent-gold); }
-
-        /* 显隐逻辑 */
         .en-content { display: none !important; }
-        .cn-content { display: inline-block !important; }
-        h1.cn-content, div.cn-content { display: block !important; }
-
         @media screen and (max-width: 600px) {
-            body { padding-top: 120px; }
             .left-back-btn { display: none !important; }
-            .day { font-size: 0.8rem; }
+            body { padding-top: 120px; }
         }
     </style>
 </head>
@@ -153,90 +94,110 @@
         <div class="logo">Kyoong<br>MY</div>
         <div class="nav-links" id="navLinks">
             <div class="cn-content">
-                <a href="index.html">主页</a>
-                <a href="countdown.html">倒计时</a>
-                <a href="announcement.html">公告</a>
-                <a href="calendar.html" style="font-weight:bold; color:var(--accent-gold);">月历</a>
+                <a href="index.html">主页</a> <a href="countdown.html">倒计时</a>
+                <a href="announcement.html">公告</a> <a href="calendar.html" style="font-weight:bold; color:var(--accent-gold);">月历</a>
                 <a href="contact.html">联络</a>
             </div>
             <div class="en-content">
-                <div class="nav-row">
-                    <a href="index.html">Home</a>
-                    <a href="countdown.html">Timer</a>
-                    <a href="announcement.html">News</a>
-                </div>
-                <div class="nav-row">
-                    <a href="calendar.html" style="font-weight:bold; color:var(--accent-gold);">Calendar</a>
-                    <a href="contact.html">Contact</a>
-                </div>
+                <div class="nav-row"><a href="index.html">Home</a><a href="countdown.html">Timer</a><a href="announcement.html">News</a></div>
+                <div class="nav-row"><a href="calendar.html" style="font-weight:bold; color:var(--accent-gold);">Calendar</a><a href="contact.html">Contact</a></div>
             </div>
         </div>
         <div class="lang-btn" onclick="switchLanguage()">CN/EN</div>
     </nav>
 
-    <div class="left-back-btn cn-content">
-        <a href="index.html">← 返回</a>
-    </div>
-    <div class="left-back-btn en-content">
-        <a href="index.html">← Back</a>
-    </div>
+    <div class="left-back-btn cn-content"><a href="index.html">← 返回</a></div>
+    <div class="left-back-btn en-content"><a href="index.html">← Back</a></div>
 
     <div class="container">
-        <h1 class="cn-content">五月月历</h1>
-        <h1 class="en-content">MAY CALENDAR</h1>
-
         <div class="calendar-card">
-            <div class="calendar-header">MAY 2026</div>
-            <div class="calendar-grid">
-                <div class="weekday">S</div><div class="weekday">M</div><div class="weekday">T</div><div class="weekday">W</div><div class="weekday">T</div><div class="weekday">F</div><div class="weekday">S</div>
-                
-                <div class="day"></div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day">1</div>
-                <div class="day special-day">2</div><div class="day">3</div>
-                <div class="day">4</div><div class="day">5</div><div class="day special-day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div><div class="day">10</div>
-                <div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div><div class="day">17</div>
-                <div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div><div class="day">24</div>
-                <div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div><div class="day">31</div>
+            <div class="calendar-nav">
+                <div class="nav-arrow" onclick="changeMonth(-1)"> < </div>
+                <div id="monthDisplay">Month Year</div>
+                <div class="nav-arrow" onclick="changeMonth(1)"> > </div>
             </div>
-
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="dot"></div>
-                    <span class="cn-content">May 2 - 伯贤生咖正日</span>
-                    <span class="en-content">May 2 - Cafe Event Day</span>
-                </div>
-                <div class="legend-item">
-                    <div class="dot"></div>
-                    <span class="cn-content">May 6 - 邊伯賢生日快乐</span>
-                    <span class="en-content">May 6 - Happy Baekhyun Day</span>
-                </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="event-info" id="eventInfo">
+                <span class="cn-content">点击粉色日期查看纪念日 ✨</span>
+                <span class="en-content">Click pink dates to see events ✨</span>
             </div>
         </div>
     </div>
 
     <script>
+        let date = new Date();
         let isEnglish = false;
-        function switchLanguage() {
-            isEnglish = !isEnglish;
-            const cnItems = document.querySelectorAll('.cn-content');
-            const enItems = document.querySelectorAll('.en-content');
-            const navLinks = document.getElementById('navLinks');
+
+        const anniversary = {
+            "4-8": { cn: "EXO 出道纪念日 👑", en: "EXO Debut Anniversary 👑" },
+            "5-2": { cn: "Kyoong MY 生咖正日 ☕", en: "Kyoong MY Cafe Event Day ☕" },
+            "5-6": { cn: "边伯贤生日快乐 🍓", en: "Happy Baekhyun Day 🍓" },
+            "7-10": { cn: "伯贤 Solo 出道纪念日 🎤", en: "Baekhyun Solo Debut Anniversary 🎤" },
+            "8-5": { cn: "爱丽 (EXO-L) 生日快乐 🐶", en: "EXO-L Birthday 🐶" },
+            "10-31": { cn: "EXO-CBX 出道纪念日 ⚡", en: "EXO-CBX Debut Anniversary ⚡" }
+        };
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthDisplay = document.getElementById('monthDisplay');
+            grid.innerHTML = '';
+
+            const year = date.getFullYear();
+            const month = date.getMonth();
+
+            const monthNames = isEnglish ? 
+                ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] :
+                ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
             
-            if (isEnglish) {
-                navLinks.classList.add('en-mode');
-                cnItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
-                enItems.forEach(el => {
-                    let type = (el.tagName === 'DIV' || el.tagName === 'H1') ? 'block' : 'inline-block';
-                    el.style.setProperty('display', type, 'important');
-                });
-            } else {
-                navLinks.classList.remove('en-mode');
-                enItems.forEach(el => el.style.setProperty('display', 'none', 'important'));
-                cnItems.forEach(el => {
-                    let type = (el.tagName === 'DIV' || el.tagName === 'H1') ? 'block' : 'inline-block';
-                    el.style.setProperty('display', type, 'important');
-                });
+            monthDisplay.innerText = `${monthNames[month]} ${year}`;
+
+            const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+            weekdays.forEach(d => grid.innerHTML += `<div class="weekday">${d}</div>`);
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div></div>`;
+
+            for (let i = 1; i <= lastDate; i++) {
+                const key = `${month + 1}-${i}`;
+                const isSpecial = anniversary[key];
+                const isToday = new Date().toDateString() === new Date(year, month, i).toDateString();
+                
+                let dayClass = isSpecial ? 'day special-day' : 'day';
+                if (isToday) dayClass += ' today';
+
+                grid.innerHTML += `<div class="${dayClass}" onclick="showEvent('${key}')">${i}</div>`;
             }
         }
+
+        function showEvent(key) {
+            const info = document.getElementById('eventInfo');
+            if (anniversary[key]) {
+                info.innerText = isEnglish ? anniversary[key].en : anniversary[key].cn;
+                info.style.color = "var(--exo-red)";
+            } else {
+                info.innerText = isEnglish ? "No special events on this day." : "这一天没有特殊安排哦~";
+                info.style.color = "var(--text-grey)";
+            }
+        }
+
+        function changeMonth(dir) {
+            date.setMonth(date.getMonth() + dir);
+            renderCalendar();
+        }
+
+        function switchLanguage() {
+            isEnglish = !isEnglish;
+            document.getElementById('navLinks').classList.toggle('en-mode', isEnglish);
+            const cnItems = document.querySelectorAll('.cn-content');
+            const enItems = document.querySelectorAll('.en-content');
+            cnItems.forEach(el => el.style.setProperty('display', isEnglish ? 'none' : 'inline-block', 'important'));
+            enItems.forEach(el => el.style.setProperty('display', isEnglish ? 'inline-block' : 'none', 'important'));
+            renderCalendar();
+        }
+
+        renderCalendar();
     </script>
 </body>
 </html>
