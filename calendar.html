@@ -44,8 +44,14 @@
         .left-back-btn a { text-decoration: none; color: var(--text-grey); background: white; border: 1px solid #EEE; padding: 10px 18px; border-radius: 50px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
         /* --- 月历容器 --- */
-        .container { width: 95%; max-width: 450px; text-align: center; }
-        
+                /* --- 放大后的月历容器 --- */
+        .container {
+            width: 95%;
+            max-width: 550px; /* 从 450px 放大到 550px */
+            text-align: center;
+            padding-bottom: 50px; /* 下方留点空间 */
+        }
+
         .calendar-card {
             background: white; border-radius: 25px; padding: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 2px solid var(--soft-pink);
@@ -56,18 +62,32 @@
             margin-bottom: 20px; color: var(--exo-red); font-weight: bold;
         }
 
+                /* 🛠️ 优化后的正圆导航箭头 */
         .nav-arrow {
-            cursor: pointer; padding: 5px 15px; border-radius: 50%;
-            background: var(--soft-pink); user-select: none; transition: 0.3s;
+            cursor: pointer;
+            
+            /* 重点 A：强制设定一样的宽高，让它具备正圆的基础 */
+            width: 35px;
+            height: 35px;
+            
+            /* 重点 B：去掉原本的 padding，改用 flex 居中文字 */
+            padding: 0; 
+            border-radius: 50%; /* 重点 C：保持 50% 圆角 */
+            
+            background: var(--soft-pink);
+            color: var(--exo-red);
+            user-select: none;
+            transition: 0.3s;
+            
+            /* 重点 D：使用 flex 让箭头符号（< 和 >）在圆圈里完美居中 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            font-weight: bold;
+            font-size: 1rem;
         }
-        .nav-arrow:hover { background: var(--accent-gold); color: white; }
 
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-        .weekday { font-size: 0.7rem; color: var(--accent-gold); font-weight: bold; padding-bottom: 10px; }
-        .day {
-            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; border-radius: 50%; transition: 0.3s; position: relative;
-        }
 
         /* 纪念日样式 */
         .special-day { background: var(--soft-pink); color: var(--exo-red); font-weight: bold; }
